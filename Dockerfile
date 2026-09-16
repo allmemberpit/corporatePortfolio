@@ -1,4 +1,3 @@
-Dockerfile
 FROM php:8.2-apache
 
 # SQLiteを使用するための拡張機能をインストール
@@ -7,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     sqlite3 \
     && docker-php-ext-install pdo_sqlite
 
-# ApacheのRewriteモジュールを有効化（必要に応じて）
+# ApacheのRewriteモジュールを有効化
 RUN a2enmod rewrite
 
 # アプリケーションのファイルをコピー
