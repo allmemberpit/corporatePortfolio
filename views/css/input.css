@@ -1,0 +1,14 @@
+.input{
+    max-width: 500px;
+    text-align: center;
+    margin:150px auto;
+}
+#btn{
+    width: 90px;
+    height: 40px;
+    border-radius: 10px;
+}
+#btn:hover{
+    color:white;
+    background-color:darkgray;
+}
