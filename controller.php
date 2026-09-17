@@ -25,8 +25,14 @@ class AuthController {
         $id = $_POST['id'] ?? '';
         $password = $_POST['password'] ?? '';
 
+        $admin = 'admin';
+
         if ($this->userModel->authenticate($id, $password)) {
             $_SESSION['user_id'] = $id;
+            if ($id === $admin) {
+                header('Location: index.php?action=admin');
+                exit;
+            }
             header('Location: index.php?action=dashboard');
             exit;
         } else {
@@ -43,6 +49,16 @@ class AuthController {
         }
         $userId = $_SESSION['user_id'];
         require 'views/dashboard.php';
+    }
+
+    // アドミン（管理者）画面表示
+    public function showAdmin() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: index.php?action=login');
+            exit;
+        }
+        $userId = $_SESSION['user_id'];
+        require 'views/admin.php';
     }
 
     // ログアウト処理

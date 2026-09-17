@@ -5,6 +5,9 @@ $controller = new AuthController();
 $action = $_GET['action'] ?? 'login';
 
 switch ($action) {
+    case 'admin':
+        $controller->showAdmin();
+        break;
     case 'login':
         $controller->showLoginForm();
         break;
