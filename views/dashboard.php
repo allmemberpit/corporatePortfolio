@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ダッシュボード</title>
+    <link rel="stylesheet" href="views/css/input.css">
 </head>
 <body>
     <div class="container">
