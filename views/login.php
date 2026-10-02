@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ログイン</title>
-    <link rel="stylesheet" href="views/css/input.css">
+    <link rel="stylesheet" href="/views/css/input.css">
 </head>
 <body>
     <div class="container">
@@ -21,7 +21,7 @@
                 <label for="password">PW:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">ログイン</button>
+            <button type="submit" class="btn">ログイン</button>
         </form>
     </div>
 </body>
