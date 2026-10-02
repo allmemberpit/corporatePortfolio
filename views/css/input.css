@@ -3,12 +3,60 @@
     text-align: center;
     margin:150px auto;
 }
-#btn{
+.btn{
+    margin-top: 20px;
     width: 90px;
     height: 40px;
     border-radius: 10px;
 }
-#btn:hover{
+.btn:hover{
     color:white;
     background-color:darkgray;
+}
+.userTable{
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+.userTable .btn{
+    margin-top: 0px;
+    width: 90px;
+    height: 30px; 
+}
+
+.modal{
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: gray;
+}
+.modal-content{
+    margin: 15% auto;
+    max-width: 500px;
+    height: 400px;
+    background-color: aqua;
+    text-align: center;
+    border-radius: 10px;
+}
+.submit{
+    background-color: red;
+}
+.submit:hover{
+    background-color: darkred;
+}
+.appContainer{
+    width: 80%;
+    margin: auto;
+    display:none;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+.alighn-top{
+    display: flex;
+    align-items: flex-start;
 }
