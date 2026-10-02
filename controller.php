@@ -1,6 +1,6 @@
 <?php
-require_once 'model.php';
-
+    require_once 'model.php';
+    require_once 'models/adminModel.php';
 class AuthController {
     private $userModel;
 
@@ -27,17 +27,18 @@ class AuthController {
 
         $admin = 'admin';
 
-        if ($this->userModel->authenticate($id, $password)) {
+        if (!$this->userModel->authenticate($id, $password)) {
+            $error = 'IDまたはパスワードが正しくありません。';
+            $this->showLoginForm($error);
+        } else {
             $_SESSION['user_id'] = $id;
             if ($id === $admin) {
-                header('Location: index.php?action=admin');
+                $adminController = new adminController();
+                $adminController->showAdmin();
                 exit;
             }
             header('Location: index.php?action=dashboard');
             exit;
-        } else {
-            $error = 'IDまたはパスワードが正しくありません。';
-            $this->showLoginForm($error);
         }
     }
 
@@ -48,19 +49,15 @@ class AuthController {
             exit;
         }
         $userId = $_SESSION['user_id'];
+        $adminModel = new adminModel();   
+        $name = $adminModel->show_name($userId);
+        $reportStatus = $this->userModel->getReportStatus($userId);
+        //$appStatus = $this->userModel->getAppStatus($userId);
+        $message = 'ログインに成功しました。';
         require 'views/dashboard.php';
     }
 
-    // アドミン（管理者）画面表示
-    public function showAdmin() {
-        if (!isset($_SESSION['user_id'])) {
-            header('Location: index.php?action=login');
-            exit;
-        }
-        $userId = $_SESSION['user_id'];
-        require 'views/admin.php';
-    }
-
+    
     // ログアウト処理
     public function logout() {
         $_SESSION = array();
