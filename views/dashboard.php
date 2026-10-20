@@ -440,7 +440,7 @@
                 </div>
                 <input  type="submit" class="btn submit" value="送信">  
             </form>
-           <button class="btn" class="closeAppModalBtn">閉じる</button>
+           <button class="btn closeAppModalBtn">キャンセル</button>
         </div>
     </div>
 </body>
