@@ -58,7 +58,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="3">休暇申請がありません。</td>
+                        <td colspan="7">休暇申請がありません。</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
