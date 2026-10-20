@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>日報一覧</title>
+    <title><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></strong> の日報一覧</title>
     <link rel="stylesheet" href="/views/css/input.css">
 </head>
 <body>
