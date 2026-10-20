@@ -54,7 +54,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="3">現在未確認・却下された日報はありません。</td>
+                            <td colspan="4">現在未確認・却下された日報はありません。</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -131,7 +131,7 @@
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="3">現在未確認・却下された申請はありません。</td>
+                            <td colspan="4">現在未確認・却下された申請はありません。</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -210,7 +210,6 @@
                     <textarea id="leaveMemo" name="memo" class="form-control" rows="3" placeholder="引き継ぎ事項や連絡先があれば記載"></textarea>
                 </div>
                 <input  type="submit" class="btn submit" value="送信">
-                <button class="btn" class="closeAppModalBtn">閉じる</button>
             </form>
             <form class="appContainer" id="tripContainer" action="/index.php?action=submitTrip" method="post">
                 <!-- 出張期間（開始日〜終了日） -->
@@ -285,7 +284,6 @@
                     </div>
                 </div>
                 <input  type="submit" class="btn submit" value="送信">
-                <button class="btn" class="closeAppModalBtn">閉じる</button>
             </form>
             <form class="appContainer" id="expenseContainer" action="/index.php?action=submitExpense" method="post" enctype="multipart/form-data">
                 <!-- 利用日 -->
@@ -367,7 +365,6 @@
                     </div>
                 </div>
                 <input  type="submit" class="btn submit" value="送信">
-                <button class="btn" class="closeAppModalBtn">閉じる</button>
             </form>
             <form class="appContainer" id="regularContainer"  action="/index.php?action=submitRegular" method="post" enctype="multipart/form-data">
                 <!-- 申請区分 -->
@@ -441,10 +438,9 @@
                         <small style="color:#666; font-size:0.8rem; display:block; margin-top:4px;">※購入後の定期券コピーまたは領収書（画像/PDF）</small>
                     </div>
                 </div>
-                <input  type="submit" class="btn submit" value="送信">
-                <button class="btn" class="closeAppModalBtn">閉じる</button>
+                <input  type="submit" class="btn submit" value="送信">  
             </form>
-           
+           <button class="btn" class="closeAppModalBtn">閉じる</button>
         </div>
     </div>
 </body>
