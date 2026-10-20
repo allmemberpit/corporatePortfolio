@@ -13,6 +13,9 @@
     color:white;
     background-color:darkgray;
 }
+.closeAppModalBtn{
+    margin-right: 14px;
+}
 .userTable{
     margin: 0 auto;
     border-collapse: collapse;
@@ -47,7 +50,7 @@
 .modal-content{
     margin: 15% auto;
     max-width: 500px;
-    height: 400px;
+    height: 490px;
     background-color: aqua;
     text-align: center;
     border-radius: 10px;
@@ -59,10 +62,10 @@
     background-color: darkred;
 }
 .appContainer{
-    width: 80%;
+    width: 100%;
     margin: auto;
     display:none;
-    max-height: 80%; 
+    max-height: 73%; 
     overflow-y: auto;
 }
 .form-group{
