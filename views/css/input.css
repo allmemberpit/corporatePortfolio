@@ -1,5 +1,5 @@
 .container{
-    max-width: 500px;
+    /*max-width: 500px;*/
     text-align: center;
     margin:150px auto;
 }
@@ -16,12 +16,22 @@
 .userTable{
     margin: 0 auto;
     border-collapse: collapse;
-    width: 80%;
+    
+}
+.userTable th,td {
+    border: solid 1px;              
+    padding: 5px;                    
 }
 .userTable .btn{
     margin-top: 0px;
-    width: 90px;
+    width: 110px;
     height: 30px; 
+}
+.userName{
+    width: 100px;
+}
+.reason{
+    width: 240px;
 }
 
 .modal{
@@ -52,11 +62,20 @@
     width: 80%;
     margin: auto;
     display:none;
+    max-height: 80%; 
+    overflow-y: auto;
 }
 .form-group{
     margin-bottom: 20px;
 }
-.alighn-top{
+.align-top{
     display: flex;
     align-items: flex-start;
+}
+
+.caution{
+    color:red;
+    display:none;
+    margin:0;
+    font-size: small;
 }
