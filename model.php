@@ -1,8 +1,10 @@
 <?php
+date_default_timezone_set('Asia/Tokyo');
 class UserModel {
     private $pdo;
-
+    private $now;
     public function __construct() {
+        $this->now = date('Y-m-d H:i:s');
         try {
             // SQLiteデータベースファイルに接続（なければ自動作成）
             $this->pdo = new PDO('sqlite:' . __DIR__ . '/database.sqlite');
@@ -39,6 +41,82 @@ class UserModel {
             $insertStmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
             $insertStmt->execute();
         }
+
+         $sql = "CREATE TABLE IF NOT EXISTS reports (
+                id INTEGER PRIMARY KEY,
+                user_id TEXT NOT NULL,
+                writing TEXT NOT NULL,
+                status INTEGER NOT NULL,
+                created_at DATETIME default current_timestamp,
+                updated_at DATETIME default current_timestamp
+            )";
+            $this->pdo->exec($sql);
+
+        //申請書全体のテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS applications (
+            id INTEGER PRIMARY KEY,
+            user_id TEXT NOT NULL,
+            category integer NOT NULL,
+            status integer NOT NULL,
+            created_at DATETIME default current_timestamp,
+            updated_at DATETIME default current_timestamp,
+            FOREIGN KEY (user_id) REFERENCES users(id)
+        )";
+        $this->pdo->exec($sql);
+        //休暇申請のテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS rest_applications (
+            id INTEGER PRIMARY KEY,
+            application_id INTEGER NOT NULL,
+            leave_type TEXT NOT NULL,
+            target_date DATE NOT NULL,
+            reason TEXT,
+            memo TEXT,
+            FOREIGN KEY (application_id) REFERENCES applications(id)
+        )";
+        $this->pdo->exec($sql);
+        //出張申請のテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS trip_applications (
+            id INTEGER PRIMARY KEY,
+            application_id INTEGER NOT NULL,
+            destination TEXT NOT NULL,
+            start_date DATE NOT NULL,
+            end_date DATE NOT NULL,
+            purpose TEXT NOT NULL,
+            cost integer NOT NULL,
+            lodging integer NOT NULL,
+            detail TEXT,
+            FOREIGN KEY (application_id) REFERENCES applications(id)
+        )";
+        $this->pdo->exec($sql);
+        //経費精算のテーブルの作成
+        $sql =  "CREATE TABLE IF NOT EXISTS expense_applications (
+            id INTEGER PRIMARY KEY,
+            application_id INTEGER NOT NULL,
+            expense_date DATE NOT NULL,
+            category TEXT NOT NULL,
+            payee TEXT NOT NULL,
+            amount integer NOT NULL,
+            purpose TEXT NOT NULL,
+            detail TEXT,
+            receipt_path TEXT,
+            FOREIGN KEY (application_id) REFERENCES applications(id)
+        )";
+        $this->pdo->exec($sql);
+        //定期申請のテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS regular_applications (
+            id INTEGER PRIMARY KEY,
+            application_id INTEGER NOT NULL,
+            apply_type TEXT NOT NULL,
+            departure TEXT NOT NULL,
+            destination TEXT NOT NULL,
+            viaRoute TEXT,
+            period integer NOT NULL,
+            start_date DATE NOT NULL,
+            passAmount integer NOT NULL,
+            receipt_path TEXT,
+            FOREIGN KEY (application_id) REFERENCES applications(id)
+        )";
+        $this->pdo->exec($sql);
     }
 
     // ユーザー認証ロジック
@@ -67,10 +145,13 @@ class UserModel {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function getAppStatus($id) {
-        $stmt = $this->pdo->prepare('SELECT writing FROM reports WHERE user_id = :user_id');
-        $stmt->bindValue(':user_id', $id, PDO::PARAM_STR);
+    // 申請の提出状況を取得
+    public function getApplicationStatus($userId) {
+        $stmt = $this->pdo->prepare('SELECT id,category,status,created_at FROM applications WHERE user_id = :user_id and status IN (0, 1, 2) ORDER BY created_at DESC');
+        $stmt->bindValue(':user_id', $userId, PDO::PARAM_STR);
         $stmt->execute();
+        
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }

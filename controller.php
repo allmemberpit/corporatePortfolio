@@ -1,11 +1,14 @@
 <?php
     require_once 'model.php';
     require_once 'models/adminModel.php';
+    require_once 'models/dashboardModel.php';
 class AuthController {
     private $userModel;
+    private $dashBoardModel;
 
     public function __construct() {
-        $this->userModel = new UserModel();
+        $this->userModel      = new UserModel();
+        $this->dashBoardModel = new dashBoardModel();
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
@@ -52,8 +55,13 @@ class AuthController {
         $adminModel = new adminModel();   
         $name = $adminModel->show_name($userId);
         $reportStatus = $this->userModel->getReportStatus($userId);
-        //$appStatus = $this->userModel->getAppStatus($userId);
+        $applicationStatus = $this->userModel->getApplicationStatus($userId);
         $message = 'ログインに成功しました。';
+        $applicationStatus = $this->userModel->getApplicationStatus($userId);
+        $rejectedRests = $this->dashBoardModel->getRejectedRests($userId);
+        $rejectedTrips = $this->dashBoardModel->getRejectedTrips($userId);
+        $rejectedExpens = $this->dashBoardModel->getRejectedExpens($userId);
+        $rejectedRegulars = $this->dashBoardModel->getRejectedRegulars($userId);
         require 'views/dashboard.php';
     }
 
