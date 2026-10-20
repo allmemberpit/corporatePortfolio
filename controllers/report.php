@@ -25,10 +25,10 @@ class reportController {
         $message = $msg;
         $id = $_GET['id'] ?? '';
         $this->reportModel->acceptReport($id, $status);
-        $user_id = $user_id = $_GET['user_id'] ?? '';
-        $name    = $this->adminModel->show_name($user_id);
-        $report  = $this->adminModel->getReportByUserId($user_id);
-        require __DIR__ . '/../views/report.php';
+        /*$user_id = $user_id = $_GET['user_id'] ?? '';
+        $name    = $this->adminModel->show_name($user_id);*/
+        $report  = $this->adminModel->getAllReports();
+        require __DIR__ . '/../views/allReports.php';
     }
  
 }
