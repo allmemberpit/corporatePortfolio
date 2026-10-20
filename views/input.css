@@ -1,0 +1,84 @@
+.container{
+    /*max-width: 500px;*/
+    text-align: center;
+    margin:150px auto;
+}
+.btn{
+    margin-top: 20px;
+    width: 90px;
+    height: 40px;
+    border-radius: 10px;
+}
+.btn:hover{
+    color:white;
+    background-color:darkgray;
+}
+.closeAppModalBtn{
+    margin-right: 14px;
+}
+.userTable{
+    margin: 0 auto;
+    border-collapse: collapse;
+    
+}
+.userTable th,td {
+    border: solid 1px;              
+    padding: 5px;                    
+}
+.userTable .btn{
+    margin-top: 0px;
+    width: 110px;
+    height: 30px; 
+}
+.userName{
+    width: 100px;
+}
+.reason{
+    width: 240px;
+}
+
+.modal{
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: gray;
+}
+.modal-content{
+    margin: 15% auto;
+    max-width: 500px;
+    height: 490px;
+    background-color: aqua;
+    text-align: center;
+    border-radius: 10px;
+}
+.submit{
+    background-color: red;
+}
+.submit:hover{
+    background-color: darkred;
+}
+.appContainer{
+    width: 100%;
+    margin: auto;
+    display:none;
+    max-height: 73%; 
+    overflow-y: auto;
+}
+.form-group{
+    margin-bottom: 20px;
+}
+.align-top{
+    display: flex;
+    align-items: flex-start;
+}
+
+.caution{
+    color:red;
+    display:none;
+    margin:0;
+    font-size: small;
+}
