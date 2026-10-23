@@ -4,8 +4,39 @@
     <meta charset="UTF-8">
     <title>申請書一覧</title>
     <link rel="stylesheet" href="/views/css/input.css">
+    <script src="/views/js/table.js"></script>
+    <script src="/views/js/toggle.js"></script>
 </head>
 <body>
+    <header class="portal-header">
+        <div class="header-container">
+            <!-- ロゴやサイト名 -->
+            <div class="header-logo">
+                <a href="index.php?action=dashboard">申請一覧</a>
+            </div>
+
+            <!-- ユーザー名
+            <div class="header-name">
+                <p><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></p>
+            </div>-->
+            <!-- クリック用のメニューボタン（ハンバーガーボタンなど） -->
+            <button type="button" class="menu-toggle-btn" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="btn-text">メニュー</span>
+            </button>
+        </div>
+
+        <!-- 下に伸びるメニュー領域（初期状態は閉じている） -->
+        <nav class="dropdown-menu" id="dropdownMenu">
+            <ul>
+                <li><a href="index.php?action=dashboard">ホーム</a></li>
+                <li><a href="index.php?action=admin">戻る</a></li>
+                <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
         <h2>申請書一覧</h2>
         
@@ -19,12 +50,12 @@
         <table class="userTable">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>ユーザー名</th>
-                    <th>対象日付</th>
-                    <th>休暇区分</th>
-                    <th>理由</th>
-                    <th>作成日時</th>
+                    <th onclick="sortTable(this,0)">No.<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,1)">ユーザー名<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,2)">対象日付<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,3)">休暇区分<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,4)">理由<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,5)">作成日時<span class="sort-icon">↕</span></th>
                     <th>承認</th>
                 </tr>
             </thead>
@@ -68,17 +99,17 @@
         <table class="userTable">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>ユーザー名</th>
-                    <th>開始日</th>
-                    <th>終了日</th>
-                    <th>訪問先・目的地</th>
-                    <th>目的</th>
-                    <th>概算交通費</th>
-                    <th>宿泊有無</th>
-                    <th>訪問内容・日程案</th>
-                    <th>作成日時</th>
-                    <th>承認</th>
+                    <th onclick="sortTable(this,0)">No.<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,1)">ユーザー名<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,2)">開始日<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,3)">終了日<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,4)">訪問先・目的地<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,5)">目的<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,6)">概算交通費<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,7)">宿泊有無<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,8)">訪問内容・日程案<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,9)">作成日時<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,10)">承認<span class="sort-icon">↕</span></th>
                 </tr>
             </thead>
             <tbody>
@@ -91,7 +122,9 @@
                             <td><?= htmlspecialchars($tripApp['end_date'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($tripApp['destination'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($tripApp['purpose'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($tripApp['cost'], ENT_QUOTES, 'UTF-8') ?>円</td>
+                            <td data-value="<?= htmlspecialchars($tripApp['cost'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?= htmlspecialchars($tripApp['cost'], ENT_QUOTES, 'UTF-8') ?>円
+                            </td>
                             <td>
                                 <?php if ($tripApp['lodging']==0): ?>
                                     日帰り
@@ -125,14 +158,15 @@
         <table class="userTable">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>ユーザー名</th>
-                    <th>勘定科目</th>
-                    <th>支払先</th>
-                    <th>金額</th>
-                    <th>使用目的・内容</th>
-                    <th>備考</th>
-                    <th>作成日時</th>
+                    <th onclick="sortTable(this,0)">No.<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,1)">ユーザー名<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,2)">勘定科目<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,3)">支払先<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,4)">金額<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,5)">使用目的・内容<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,6)">備考<span class="sort-icon">↕</span></th>
+                    <th>領収書</th>
+                    <th onclick="sortTable(this,7)">作成日時<span class="sort-icon">↕</span></th>
                     <th>承認</th>
                 </tr>
             </thead>
@@ -144,9 +178,18 @@
                             <td><?= htmlspecialchars($expenseApp['applicant_name'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($expenseApp['category'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($expenseApp['payee'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($expenseApp['amount'], ENT_QUOTES, 'UTF-8') ?>円</td>
+                            <td data-value="<?= htmlspecialchars($expenseApp['amount'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?= htmlspecialchars($expenseApp['amount'], ENT_QUOTES, 'UTF-8') ?>円
+                            </td>
                             <td><?= htmlspecialchars($expenseApp['purpose'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($expenseApp['detail'], ENT_QUOTES, 'UTF-8') ?></td>
+                            <td>
+                                <button type="button" 
+                                        class="view-receipt-btn btn" 
+                                        data-receipt="data:image/jpeg;base64,<?= htmlspecialchars($expenseApp['receipt_path'], ENT_QUOTES, 'UTF-8') ?>">
+                                    確認
+                                </button>
+                            </td>
                             <td><?= htmlspecialchars($expenseApp['created_at'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td>
                                 <form action="index.php?action=acceptApp&id=<?= $expenseApp['application_id'] ?>" method="POST">
@@ -172,16 +215,17 @@
         <table class="userTable">
             <thead>
                 <tr>
-                    <th>No.</th>
-                    <th>ユーザー名</th>
-                    <th>申請区分</th>
-                    <th>乗車駅</th>
-                    <th>降車駅</th>
-                    <th>利用路線・経由</th>
-                    <th>利用開始希望日</th>
-                    <th>通用期間</th>
-                    <th>定期代</th>
-                    <th>作成日時</th>
+                    <th onclick="sortTable(this,0)">No.<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,1)">ユーザー名<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,2)">申請区分<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,3)">乗車駅<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,4)">降車駅<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,5)">利用路線・経由<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,6)">利用開始希望日<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,7)">通用期間<span class="sort-icon">↕</span></th>
+                    <th onclick="sortTable(this,8)">定期代<span class="sort-icon">↕</span></th>
+                    <th>定期券写し・領収書</th>
+                    <th onclick="sortTable(this,9)">作成日時<span class="sort-icon">↕</span></th>
                     <th>承認</th>
                 </tr>
             </thead>
@@ -201,8 +245,19 @@
                             <td><?= htmlspecialchars($regularApp['destination'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($regularApp['viaRoute'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td><?= htmlspecialchars($regularApp['start_date'], ENT_QUOTES, 'UTF-8') ?></td>
-                            <td><?= htmlspecialchars($regularApp['period'], ENT_QUOTES, 'UTF-8') ?>ヶ月</td>
-                            <td><?= htmlspecialchars($regularApp['passAmount'], ENT_QUOTES, 'UTF-8') ?>円</td>
+                            <td data-value="<?= htmlspecialchars($regularApp['period'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?= htmlspecialchars($regularApp['period'], ENT_QUOTES, 'UTF-8') ?>ヶ月
+                            </td>
+                            <td data-value="<?= htmlspecialchars($regularApp['passAmount'], ENT_QUOTES, 'UTF-8') ?>">
+                                <?= htmlspecialchars($regularApp['passAmount'], ENT_QUOTES, 'UTF-8') ?>円
+                            </td>
+                            <td>
+                                <button type="button" 
+                                        class="view-receipt-btn btn" 
+                                        data-receipt="data:image/jpeg;base64,<?= htmlspecialchars($regularApp['receipt_path'], ENT_QUOTES, 'UTF-8') ?>">
+                                    確認
+                                </button>
+                            </td>
                             <td><?= htmlspecialchars($regularApp['created_at'], ENT_QUOTES, 'UTF-8') ?></td>
                             <td>
                                 <form action="index.php?action=acceptApp&id=<?= $regularApp['application_id'] ?>" method="POST">
@@ -218,13 +273,20 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="11">定期申請がありません。</td>
+                        <td colspan="12">定期申請がありません。</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
         </table>
         <a href="index.php?action=admin">戻る</a>
         <a href="index.php?action=logout">ログアウト</a>
+    </div>
+    <!-- 画像表示用モーダル（ -->
+    <div id="receiptModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <img id="modalImage" src="" alt="書類画像" style="max-width: 100%; height: auto;">
+        </div>
     </div>
 </body>
 </html>
