@@ -55,7 +55,13 @@ switch ($action) {
         $reportController = new reportController();
         $reportController->rejectReport();   
         break;
+    case 'resetPw':
+        $adminController->resetPassword();
+        break;
     case 'changePw':
+        $dashboardController->changePassword();
+        break;
+    case 'changePwAdmin':
         $adminController->changePassword();
         break;
     case 'staffCheckReport':
