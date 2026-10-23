@@ -2,17 +2,11 @@ window.addEventListener('DOMContentLoaded', () => {
     const reportBtn        = document.getElementById('reportBtn');
     const reportModal      = document.getElementById('reportModal');
     const postReport       = document.getElementById('postReport');
-    const cancelBtn        = document.getElementById('cancelBtn');
     const appBtn           = document.getElementById('appBtn');
     const appModal         = document.getElementById('appModal');
     const reportForm       = document.getElementById('report');
     //const closeAppModalBtn = document.querySelectorAll('.closeAppModalBtn');
-    const typeList         = document.getElementById('typeList');
-    const restContainer    = document.getElementById('restContainer');
-    const tripContainer    = document.getElementById('tripContainer');
-    const expenseContainer = document.getElementById('expenseContainer');
-    const regularContainer = document.getElementById('regularContainer');
-
+   
     // 日報ボタンがクリックされたときの処理
     reportBtn.addEventListener('click', () => {
         reportModal.style.display = 'block';
@@ -30,6 +24,8 @@ window.addEventListener('DOMContentLoaded', () => {
             postReport.action = `/index.php?action=modifyReport&id=${button.dataset.id}`;
         });
     });
+
+    const typeList         = document.getElementById('typeList');
     // 申請書修正ボタンがクリックされたときの処理
     document.querySelectorAll('.modifyAppBtn').forEach(button => {
         button.addEventListener('click', () => {
@@ -59,7 +55,8 @@ window.addEventListener('DOMContentLoaded', () => {
             typeList.disabled = true;
         });
     });
-    
+
+    const cancelBtn        = document.getElementById('cancelBtn');
     cancelBtn.addEventListener('click', () => {
         // キャンセルボタンがクリックされたときの処理
         reportModal.style.display = 'none';
@@ -72,17 +69,8 @@ window.addEventListener('DOMContentLoaded', () => {
             typeList.value = 'default';
         });
     });
-    // モーダルの背景（黒い部分）をクリックした時も閉じる
-    window.addEventListener('click', (event) => {
-        if (event.target === reportModal) {
-            reportModal.style.display = 'none';
-        }
-        if (event.target === appModal) {
-            allClose();
-            appModal.style.display = 'none';
-            typeList.value = 'default';
-        }
-    });
+
+    
 
     // 日報の種類を選択したときの処理
     typeList.addEventListener('change', () => {
@@ -90,6 +78,10 @@ window.addEventListener('DOMContentLoaded', () => {
         selectType(selectedType);
     });
    
+    const restContainer    = document.getElementById('restContainer');
+    const tripContainer    = document.getElementById('tripContainer');
+    const expenseContainer = document.getElementById('expenseContainer');
+    const regularContainer = document.getElementById('regularContainer');
     function selectType(type) {
         const today = new Date().toISOString().split('T')[0];
         allClose();
@@ -172,6 +164,55 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('passAmount').value = app.passAmount;
         regularContainer.action = `/index.php?action=modifyRegular&id=${app.application_id}`;
     }
+
+    const changePw = document.getElementById('changePw');
+    const pwModal  = document.getElementById('pwModal');
+    const oldPw     = document.getElementById('oldPw');
+    const newPw     = document.getElementById('newPw');
+    const confPw    = document.getElementById('confPw');
+
+    changePw.addEventListener('click', () => {
+        pwModal.style.display = 'block';
+    });
+
+    newPw.addEventListener('change',()=>{
+        //パスワードが元のパスワードと一緒の時の処理
+        if(oldPw.value == newPw.value){
+            npCaution.style.display = 'block';
+            sumitBtn.disabled = true;
+        }else{
+            npCaution.style.display = 'none';
+            if(confPw.value == newPw.value){
+                sumitBtn.disabled = false;
+            }
+        }
+    });
+    confPw.addEventListener('change',()=>{
+        //パスワードが元のパスワードと一緒の時の処理
+        if(confPw.value == newPw.value){
+            cpCaution.style.display = 'none';
+            if(oldPw.value != newPw.value){
+                sumitBtn.disabled = false;
+            }
+        }else{
+            cpCaution.style.display = 'block';
+            sumitBtn.disabled = true;
+        }
+    });
+    // モーダルの背景（黒い部分）をクリックした時も閉じる
+    window.addEventListener('click', (event) => {
+        if (event.target === reportModal) {
+            reportModal.style.display = 'none';
+        }
+        if (event.target === appModal) {
+            allClose();
+            appModal.style.display = 'none';
+            typeList.value = 'default';
+        }
+        if(event.target === pwModal){
+            pwModal.style.display = 'none';
+        }
+    });
 });
 
     

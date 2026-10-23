@@ -1,26 +1,19 @@
+ function confirmReset(userName, defaultPassword) {
+    // window.confirmのダイアログに、誰のパスワードを何にリセットするかを表示する
+    const message = `${userName} さん のパスワードを、初期値「${defaultPassword}」にリセットしますか？`;
+    
+    // OKなら true（送信実行）、キャンセルなら false（送信中止）を返す
+    return window.confirm(message);
+}
 window.addEventListener('DOMContentLoaded', () => {
-    const changePw  = document.querySelectorAll('.changePw');
     const pwModal   = document.getElementById('pwModal');
-    const cancelBtn = document.getElementById('cancelBtn');
     const sumitBtn  = document.getElementById('submitBtn');
-    const oldPw     = document.getElementById('oldPw');
+    const changePw = document.getElementById('changePw');
     const newPw     = document.getElementById('newPw');
     const confPw    = document.getElementById('confPw');
-    const npCaution = document.getElementById('npCaution');
-    const cpCaution = document.getElementById('cpCaution');
-    const pwId      = document.getElementById('pwId');
 
-
-    changePw.forEach(button => {
-        button.addEventListener('click', () => {
-            pwModal.style.display = 'block';
-            sumitBtn.disabled = true;
-            pwId.value = button.dataset.id;
-        });
-    });
-    cancelBtn.addEventListener('click', () => {
-        // キャンセルボタンがクリックされたときの処理
-        closeModal();
+    changePw.addEventListener('click', () => {
+        pwModal.style.display = 'block';
     });
 
     newPw.addEventListener('change',()=>{
@@ -62,4 +55,6 @@ window.addEventListener('DOMContentLoaded', () => {
         newPw.value = '';
         confPw.value = '';
     }
+
+    
 });
