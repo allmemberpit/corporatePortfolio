@@ -205,7 +205,7 @@
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="9">経費精算申請がありません。</td>
+                        <td colspan="10">経費精算申請がありません。</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
