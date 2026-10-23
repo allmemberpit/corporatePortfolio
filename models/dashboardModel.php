@@ -302,7 +302,7 @@ class dashboardModel{
         }
     }
 
-    public function updateTrip($id,  $start_date, $end_date, $destination, $purpose, $estimated_cost, $has_lodging, $detail) {
+    public function updateTrip($id, $start_date, $end_date, $destination, $purpose, $estimated_cost, $has_lodging, $detail) {
         try {
             // 1. トランザクション開始
             $this->pdo->beginTransaction();
@@ -396,6 +396,40 @@ class dashboardModel{
             // エラーが発生した場合はロールバック（途中の書き込みを取り消し）
             $this->pdo->rollBack();
             return error_log("定期申請修正エラー: " . $e->getMessage());;
+        }
+    }
+    //パスワード確認
+    public function confirmationPassword($id, $oldPw){
+        $stmt = $this->pdo->prepare('SELECT password FROM users where id = :id');
+        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
+        $stmt->execute();
+        $password = $stmt->fetch(PDO::FETCH_ASSOC)['password'];
+        if(password_verify($oldPw, $password)){
+            return true;
+        }
+        return false;
+    }
+    //パスワード変更
+    public function changePassword($id, $newPw ){
+        try {
+            // 1. トランザクション開始
+            $this->pdo->beginTransaction();
+           
+            // 4. userテーブルを変更
+            $sqlChange = "UPDATE users SET password = :password WHERE id=:id";
+
+            $stmtChange = $this->pdo->prepare($sqlChange);
+            $stmtChange->bindValue(':id', $id, PDO::PARAM_STR);
+            $stmtChange->bindValue(':password', password_hash($newPw, PASSWORD_DEFAULT), PDO::PARAM_STR);
+            $stmtChange->execute();
+           
+            // 5. すべて成功したらコミット（DBへ確定保存）
+            $this->pdo->commit();
+            return 'パスワードが変更されました'; 
+        } catch (Exception $e) {
+            // エラーが発生した場合はロールバック（途中の書き込みを取り消し）
+            $this->pdo->rollBack();
+            return error_log("パスワード変更エラー: " . $e->getMessage());;
         }
     }
 

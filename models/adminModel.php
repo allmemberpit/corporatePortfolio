@@ -103,7 +103,7 @@ class adminModel{
 
     public function getExpenseApps(){
         $stmt = $this->pdo->prepare("SELECT app.id AS application_id,u.name AS applicant_name, 
-            expense.purpose,app.created_at,expense.amount,expense.expense_date,expense.payee,expense.category,expense.detail
+            expense.purpose,app.created_at,expense.amount,expense.expense_date,expense.payee,expense.category,expense.detail,expense.receipt_path
             FROM applications app
             INNER JOIN expense_applications expense ON app.id = expense.application_id
             LEFT JOIN users u ON app.user_id = u.id
@@ -116,7 +116,7 @@ class adminModel{
 
     public function getRegularApps(){
         $stmt = $this->pdo->prepare("SELECT app.id AS application_id,u.name AS applicant_name, 
-            app.created_at,regular.start_date,regular.apply_type,regular.departure,regular.destination,regular.viaRoute,regular.period,regular.passAmount
+            app.created_at,regular.start_date,regular.apply_type,regular.departure,regular.destination,regular.viaRoute,regular.period,regular.passAmount,regular.receipt_path
             FROM applications app
             INNER JOIN regular_applications regular ON app.id = regular.application_id
             LEFT JOIN users u ON app.user_id = u.id
@@ -127,18 +127,7 @@ class adminModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function confirmationPassword($id, $oldPw){
-        $stmt = $this->pdo->prepare('SELECT password FROM users where id = :id');
-        $stmt->bindValue(':id', $id, PDO::PARAM_STR);
-        $stmt->execute();
-        $password = $stmt->fetch(PDO::FETCH_ASSOC)['password'];
-        if(password_verify($oldPw, $password)){
-            return true;
-        }
-        return false;
-    }
-
-    public function changePassword($id, $newPw ){
+    public function resetPw($id,$pw){
         try {
             // 1. トランザクション開始
             $this->pdo->beginTransaction();
@@ -148,12 +137,12 @@ class adminModel{
 
             $stmtChange = $this->pdo->prepare($sqlChange);
             $stmtChange->bindValue(':id', $id, PDO::PARAM_STR);
-            $stmtChange->bindValue(':password', password_hash($newPw, PASSWORD_DEFAULT), PDO::PARAM_STR);
+            $stmtChange->bindValue(':password', password_hash($pw, PASSWORD_DEFAULT), PDO::PARAM_STR);
             $stmtChange->execute();
            
             // 5. すべて成功したらコミット（DBへ確定保存）
             $this->pdo->commit();
-            return 'パスワードが変更されました'; 
+            return 'パスワードがリセットされました'; 
         } catch (Exception $e) {
             // エラーが発生した場合はロールバック（途中の書き込みを取り消し）
             $this->pdo->rollBack();
