@@ -176,4 +176,19 @@ class dashboardController {
        
         $this->showDashboard($message);
     }
+
+    //パスワード変更処理
+    public function changePassword() {
+        $id    = $_SESSION['user_id'];;
+        $oldPw = $_POST['oldPw'] ?? '';
+        $newPw = $_POST['newPw'] ?? '';
+
+        if ($this->dashboardModel->confirmationPassword($id, $oldPw)) {
+            $message = $this->dashboardModel->changePassword($id, $newPw);
+        }else{
+            $message = '元のパスワードが違います';
+        }
+        $this->showDashboard($message);
+    }
+
 }

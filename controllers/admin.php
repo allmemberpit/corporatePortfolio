@@ -1,11 +1,14 @@
 <?php
 require_once __DIR__ . '/../models/adminModel.php';
+require_once __DIR__ . '/../models/dashboardModel.php';
 
 class adminController {
     private $adminModel;
+    private $dashboardModel;
 
     public function __construct() {
-        $this->adminModel = new adminModel();
+        $this->adminModel     = new adminModel();
+        $this->dashboardModel = new dashboardModel();
     }
 
     // アドミン（管理者）画面表示
@@ -14,7 +17,6 @@ class adminController {
         $message = 'ログインに成功しました。';
         $name = $this->adminModel->show_name($userId);
         $this->showAdminScreen($message, $name);
-        
     }
 
     private function showAdminScreen($message, $name){
@@ -43,21 +45,7 @@ class adminController {
             require __DIR__ . '/../views/admin.php';
         }
     }
-    //パスワード変更処理
-    public function changePassword() {
-        $id    = $_POST['id'] ?? '';
-        $oldPw = $_POST['oldPw'] ?? '';
-        $newPw = $_POST['newPw'] ?? '';
-
-        if ($this->adminModel->confirmationPassword($id, $oldPw)) {
-            $message = $this->adminModel->changePassword($id, $newPw);
-        }else{
-            $message = '元のパスワードが違います';
-        }
-        $name = $this->adminModel->show_name($_SESSION['user_id']);
-        $this->showAdminScreen($message,$name);
-    }
-
+    
     // 申請確認処理
     public function checkApplication() {
         $user_id = $_GET['user_id'] ?? '';
@@ -69,7 +57,6 @@ class adminController {
     // 全ての日報確認処理
     public function checkAllReports() {
         $report = $this->adminModel->getAllReports();
-
         require __DIR__ . '/../views/allReports.php';
     }
     // 全ての申請確認処理
@@ -80,5 +67,34 @@ class adminController {
         $regularApps  = $this->adminModel->getRegularApps();
 
         require __DIR__ . '/../views/allApplications.php';
+    }
+    //パスワードのリセット処理
+    public function resetPassword()  {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id       = $_POST['id'] ?? '';
+            $password = $_POST['pw'] ?? '';
+            $name     = $_POST['adminName'] ?? '';
+            // パスワードリセット処理
+            $message =$this->adminModel->resetPw($id,$password);
+
+            $users = $this->adminModel->show_user();
+            require __DIR__ . '/../views/admin.php';
+        }
+    }
+
+    //adminのパスワード変更処理
+    public function changePassword(){
+        $id    = $_SESSION['user_id'];;
+        $oldPw = $_POST['oldPw'] ?? '';
+        $newPw = $_POST['newPw'] ?? '';
+        $name  = $_POST['name'] ?? '';
+
+        if ($this->dashboardModel->confirmationPassword($id, $oldPw)) {
+            $message = $this->dashboardModel->changePassword($id, $newPw);
+        }else{
+            $message = '元のパスワードが違います';
+        }
+        $users = $this->adminModel->show_user();
+        require __DIR__ . '/../views/admin.php';
     }
 }
