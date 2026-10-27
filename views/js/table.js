@@ -63,13 +63,12 @@ function sortTable(thElem, columnIndex) {
 
         // 【2】ボタンのある列がクリックされた場合のみ、ボタンの有無をソート基準にする
         if (isButtonColumn) {
-            const hasButtonA = cellA && cellA.querySelector('input[type="submit"]') !== null ? 1 : 0;
-            const hasButtonB = cellB && cellB.querySelector('input[type="submit"]') !== null ? 1 : 0;
+            const priorityA = getButtonPriority(cellA);
+            const priorityB = getButtonPriority(cellB);
 
-            if (hasButtonA !== hasButtonB) {
+            if (priorityA !== priorityB) {
                 // 基準となる比較（ボタンがある方を上にする場合）
-                const comp = hasButtonB - hasButtonA; 
-                
+                const comp = priorityB - priorityA; 
                 // 【3】矢印（nextAsc）の向きに合わせて、上にするか下にするかを反転させる
                 return nextAsc ? comp : -comp;
             }
@@ -77,19 +76,17 @@ function sortTable(thElem, columnIndex) {
         }
 
         // --- 【4】通常のソート処理（日付・数値・文字列） ---
-        const textA = cellA ? cellA.textContent.trim() : "";
-        const textB = cellB ? cellB.textContent.trim() : "";
+      
+        // data-value属性があればそれを数値として使う。なければ通常のテキストを使う
+        const valA = cellA.dataset.value !== undefined ? cellA.dataset.value : cellA.textContent.trim();
+        const valB = cellB.dataset.value !== undefined ? cellB.dataset.value : cellB.textContent.trim();
 
-        /*const timeA = parseDateToTimestamp(textA);
-        const timeB = parseDateToTimestamp(textB);*/
-
-        
-        const numA = Number(textA);
-        const numB = Number(textB);
+        const numA = Number(valA);
+        const numB = Number(valB);
         if (!isNaN(numA) && !isNaN(numB)) {
             comparison = numA - numB;
         } else {
-            comparison = textA.localeCompare(textB, 'ja');
+            comparison = valA.localeCompare(valB, 'ja');
         }
         
 
@@ -118,4 +115,16 @@ function updateSortIcons(table, activeTh, isAsc) {
     if (activeIcon) {
         activeIcon.textContent = isAsc ? "▲" : "▼";
     }
+}
+
+// 【ヘルパー関数】セルのボタンの種類から優先度（重み）を返す
+function getButtonPriority(cell) {
+    if (!cell) return 0;
+    const submitBtn = cell.querySelector('input[type="submit"]');
+    if (!submitBtn) return 0;
+
+    const value = submitBtn.value.trim();
+    if (value === '修正') return 2; // 「修正」が最も優先度を高くする
+    if (value === '確認') return 1; // 「確認」はその次
+    return 1; // その他のsubmitボタンがある場合
 }
