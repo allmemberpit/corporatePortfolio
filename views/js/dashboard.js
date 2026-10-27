@@ -110,6 +110,11 @@ window.addEventListener('DOMContentLoaded', () => {
         tripContainer.style.display = 'none';
         expenseContainer.style.display = 'none';
         regularContainer.style.display = 'none';
+
+        restContainer.reset();
+        tripContainer.reset();
+        expenseContainer.reset();
+        regularContainer.reset();
         
         restContainer.action    = `/index.php?action=submitRest`;
         tripContainer.action    = `/index.php?action=submitTrip`;
@@ -128,7 +133,7 @@ window.addEventListener('DOMContentLoaded', () => {
        document.getElementById('leaveMemo').value = app.memo;
        restContainer.action = `/index.php?action=modifyRest&id=${app.application_id}`;
     }
-    //申請書修正ボタンが押されたときの処理。休暇
+    //申請書修正ボタンが押されたときの処理。出張
     function tripAppModal(app){
         tripContainer.style.display = 'block';
         document.getElementById('startDate').value   = app.start_date;
@@ -152,7 +157,7 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('expenseMemo').value = app.detail;
         expenseContainer.action = `/index.php?action=modifyExpense&id=${app.application_id}`;
     }
-
+    //申請書修正ボタンが押されたときの処理。定期
     function regularAppModal(app){
         regularContainer.style.display = 'block';
         document.querySelector(`input[name="apply_type"][value="${app.apply_type}"]`).checked = true;
@@ -165,11 +170,31 @@ window.addEventListener('DOMContentLoaded', () => {
         regularContainer.action = `/index.php?action=modifyRegular&id=${app.application_id}`;
     }
 
+    //datalistで一度値を選ぶと他の候補が選べなくなるので、それを阻止する処理
+    document.querySelectorAll('input[list]').forEach(input => {
+        // フォーカスが当たった（クリックされた）とき
+        input.addEventListener('focus', function() {
+            // 現在の値を一時保存しておく
+            this.dataset.currentValue = this.value;
+            // 値を一時的に空にして、すべての候補を強制的に表示させる
+            this.value = '';
+        });
+
+        // フォーカスが外れた（別の場所をクリックした）とき
+        input.addEventListener('blur', function() {
+            // 何も選ばれず空のままフォーカスが外れた場合は、元の値を元に戻す
+            if (this.value === '' && this.dataset.currentValue) {
+                this.value = this.dataset.currentValue;
+            }
+        });
+    });
+
+    //パスワードモーダルの処理
     const changePw = document.getElementById('changePw');
     const pwModal  = document.getElementById('pwModal');
-    const oldPw     = document.getElementById('oldPw');
-    const newPw     = document.getElementById('newPw');
-    const confPw    = document.getElementById('confPw');
+    const oldPw    = document.getElementById('oldPw');
+    const newPw    = document.getElementById('newPw');
+    const confPw   = document.getElementById('confPw');
 
     changePw.addEventListener('click', () => {
         pwModal.style.display = 'block';
