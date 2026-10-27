@@ -48,7 +48,7 @@ body{
     width: 100%;
     display: none;
     position: fixed;
-    top: 60%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: gray;
@@ -66,6 +66,12 @@ body{
 }
 .submit:hover{
     background-color: darkred;
+}
+.check{
+    background-color: dodgerblue;
+}
+.check:hover{
+    background-color:skyblue;
 }
 .appContainer{
     width: 100%;
