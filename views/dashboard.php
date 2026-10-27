@@ -72,10 +72,10 @@
                                 <td>
                                     <?php if($reportStatusItem['status'] ==1): ?>
                                         <form action="index.php?action=staffCheckReport&id=<?= $reportStatusItem['id'] ?>" method="POST">
-                                            <input type="submit" value="確認" class="btn">
+                                            <input type="submit" value="確認" class="btn check">
                                         </form>
                                     <?php elseif ($reportStatusItem['status'] == 2): ?>
-                                        <input type="submit" class="modifyReportBtn btn" value="修正" 
+                                        <input type="submit" class="modifyReportBtn btn submit" value="修正" 
                                             data-id="<?= htmlspecialchars($reportStatusItem['id'], ENT_QUOTES, 'UTF-8') ?>"
                                             data-content="<?= htmlspecialchars($reportStatusItem['writing'], ENT_QUOTES, 'UTF-8') ?>"
                                         class="btn">
@@ -133,10 +133,10 @@
 
                                     <?php elseif($applicationStatusItem['status'] ==1): ?>
                                         <form action="index.php?action=staffCheckApplication&id=<?= $applicationStatusItem['id'] ?>" method="POST">
-                                            <input type="submit" value="確認" class="btn">
+                                            <input type="submit" value="確認" class="btn check">
                                         </form>
                                     <?php elseif ($applicationStatusItem['status'] == 2): ?>
-                                        <input type="submit" class="modifyAppBtn btn" value="修正" 
+                                        <input type="submit" class="modifyAppBtn btn submit" value="修正" 
                                             data-id="<?= htmlspecialchars($applicationStatusItem['id'], ENT_QUOTES, 'UTF-8') ?>"
                                             data-content="
                                                 <?php if ($applicationStatusItem['category'] == 1): 

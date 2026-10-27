@@ -109,7 +109,7 @@
                     <th onclick="sortTable(this,7)">宿泊有無<span class="sort-icon">↕</span></th>
                     <th onclick="sortTable(this,8)">訪問内容・日程案<span class="sort-icon">↕</span></th>
                     <th onclick="sortTable(this,9)">作成日時<span class="sort-icon">↕</span></th>
-                    <th onclick="sortTable(this,10)">承認<span class="sort-icon">↕</span></th>
+                    <th>承認</th>
                 </tr>
             </thead>
             <tbody>
