@@ -2,7 +2,6 @@ window.addEventListener('DOMContentLoaded', () => {
     const receiptButtons = document.querySelectorAll('.view-receipt-btn');
     const modal = document.getElementById('receiptModal');
     const modalImage = document.getElementById('modalImage');
-    const closeBtn = document.querySelector('.close-btn');
 
     // 2. 各ボタンにクリックイベントを設定
     receiptButtons.forEach(button => {
@@ -23,12 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. 閉じるボタン（×）が押されたらモーダルを非表示にする
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modalImage.src = ''; // 読み込み保持を防ぐためにクリア
-    });
-
+  
     // 4. モーダルの背景部分をクリックしても閉じられるようにする
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
