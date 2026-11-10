@@ -41,8 +41,8 @@ class UserModel {
             $insertStmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
             $insertStmt->execute();
         }
-
-         $sql = "CREATE TABLE IF NOT EXISTS reports (
+        // 日報のテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS reports (
                 id INTEGER PRIMARY KEY,
                 user_id TEXT NOT NULL,
                 writing TEXT NOT NULL,
@@ -115,6 +115,25 @@ class UserModel {
             passAmount integer NOT NULL,
             receipt_path TEXT,
             FOREIGN KEY (application_id) REFERENCES applications(id)
+        )";
+        $this->pdo->exec($sql);
+        // プロフィールのテーブルの作成
+        $sql = "CREATE TABLE IF NOT EXISTS profiles (
+            id INTEGER PRIMARY KEY,user_id TEXT NOT NULL,
+            name TEXT not null,birthday DATE,
+            address TEXT,nearest_station TEXT,
+            word INTEGER,excel INTEGER,
+            powerpoint INTEGER,outlook INTEGER,
+            spreadsheet INTEGER,teams INTEGER,adobe INTEGER,
+            cloud INTEGER,accounting INTEGER,erp INTEGER,
+            office_other TEXT,python INTEGER,html INTEGER,
+            javascript INTEGER,typescript INTEGER,
+            php INTEGER,java INTEGER,csharp INTEGER,
+            ruby INTEGER,cplusplus INTEGER,sql INTEGER,
+            go INTEGER,programming_other TEXT,
+            created_at DATETIME default current_timestamp,
+            updated_at DATETIME default current_timestamp,
+            FOREIGN KEY (user_id) REFERENCES users(id)
         )";
         $this->pdo->exec($sql);
     }

@@ -4,11 +4,13 @@ require_once 'controllers/admin.php';
 require_once 'controllers/dashboard.php';
 require_once 'controllers/report.php';
 require_once 'controllers/applications.php';
+require_once 'controllers/profile.php';
 
 $controller = new AuthController();
 $adminController = new adminController();
 $dashboardController = new DashboardController();
 $appController = new appController();
+$profileController = new profileController();
 
 $action = $_GET['action'] ?? 'login';
 
@@ -102,6 +104,12 @@ switch ($action) {
         break;
     case 'modifyRegular':
         $dashboardController->modifyRegular();
+        break;
+    case 'profile':
+        $profileController->staffProfile();
+        break;
+    case 'saveProfile':
+        $profileController->saveProfile();
         break;
     default:
         $controller->showLoginForm();
