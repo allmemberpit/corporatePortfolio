@@ -32,6 +32,10 @@ class adminModel{
         $insertStmt->bindValue(':name', $name, PDO::PARAM_STR);
         $insertStmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
         $insertStmt->execute();
+        $insertStmt = $this->pdo->prepare('INSERT INTO profiles (user_id, name, word = 1, excel = 1, powerpoint = 1, outlook = 1, spreadsheet = 1, teams = 1, adobe = 1, cloud = 1, accounting = 1, erp = 1, python = 1, html = 1, javascript = 1, typescript = 1, php = 1, java = 1, csharp = 1, ruby = 1, cplusplus = 1, sql = 1, go = 1) VALUES (:user_id, :name)');
+        $insertStmt->bindValue(':user_id', $id, PDO::PARAM_STR);
+        $insertStmt->bindValue(':name', $name, PDO::PARAM_STR);
+        $insertStmt->execute();
         return true;
     }
 
