@@ -1,0 +1,146 @@
+.profile{
+    background-color: lightgrey;
+    border-radius: 10px;
+    margin: 0 auto;
+    max-width: 500px;
+}
+
+.personal h2{
+    display: flex;
+    align-items: center; /* 上下の中央揃え */
+    position: relative; /* 完全に文字を中央にするための基準 */
+
+}
+.personal .profileTitle{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 完全に中央へ配置 */
+}
+.personal button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;              
+    height: 30px;             
+    border-radius: 10px;        
+    
+    color: white;            
+    font-size: 14px;           /* 記号のサイズ */
+    font-weight: bold;
+    margin: 10px 10px 7px auto;         /* 見出しの文字との間隔 */
+}
+
+#edit{
+    background-color: blue; 
+}
+
+#save{
+    display: none;
+    background-color: red; 
+}
+
+#cancel{
+    display: none;
+    background-color: green; 
+    margin-left: 10px;
+}
+
+#submitBtn{
+    background-color: red; 
+}
+
+.profileAccordion{
+    max-height: 0;
+    box-sizing: border-box;
+    width: 100%;            /* 親の幅いっぱいに広げる */
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+/* クラス .is-open が付いたとき（開いた状態） */
+.profileAccordion.is-open {
+    max-height: 1300px;    
+    transition: max-height 0.3s ease-in;
+}
+.accordionH3 {
+    display: flex;
+    align-items: center; /* 上下の中央揃え */
+    cursor: pointer; 
+    position: relative; /* 完全に文字を中央にするための基準 */
+    user-select: none; /* 文字列が意図せず選択されてしまうのを防ぐ */
+}
+.accordionH3 .skillsTitle{
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%); /* 完全に中央へ配置 */
+}
+.accordionH3 .accordionMode {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;               /* ボタンの横幅 */
+    height: 26px;              /* ボタンの高さ（幅と同じにして正円にする） */
+    border-radius: 50%;        /* 角丸を50%にして完全に丸くする */
+    background-color: #f1f5f9; /* 薄いグレーの背景色（好みに応じて変更可） */
+    color: #334155;            /* 記号（＋／－）の色 */
+    font-size: 14px;           /* 記号のサイズ */
+    font-weight: bold;
+    margin-left: auto;         /* 見出しの文字との間隔 */
+    transition: background-color 0.2s, transform 0.2s; /* ホバー時の滑らかな変化 */
+}
+
+
+/* マウスホバー時に少し色を濃くして「押せる感」を出す */
+.accordionH3:hover .accordionMode {
+    background-color: #e2e8f0;
+}
+.profile-row {
+    display: flex;
+    align-items: flex-start; /* 上揃え */
+    gap: 15px;
+    margin-bottom: 15px;
+    border: 1px solid darkgrey;
+    border-radius: 10px
+}
+
+.profileCategory{
+    font-family:  "Hiragino Kaku Gothic ProN", "Meiryo UI", "BIZ UDPGothic", sans-serif;
+    display: inline-block;
+    width: 170px
+}
+.profileData{
+    font-size: large;
+}
+.profileInput{
+    display: none;
+    border: 1px solid #cbd5e1;       /* 箱の枠線（薄いグレー） */
+    border-radius: 8px;              /* 角丸 */
+    padding: 12px ;              /* 箱の中の余白 */
+    background-color: #f8fafc;       /* 薄い背景色 */
+    width: 500px;                
+    display: none;
+    flex-wrap: wrap;                 /* 入り切らないときは箱の中で自動で改行する */
+    gap: 12px;                  /* ラジオボタン同士の縦・横の隙間 */
+    margin-right:3px;
+}
+
+.modal-row {
+    display: flex;
+    align-items: flex-start; /* 上揃え */
+    gap: 15px;
+    border:1px solid gray;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+#profileContent{
+    height:86%;
+    overflow-y: auto;
+}
+.modal-row .modalCategory{
+    display: inline-block;
+    width: 40%;
+}
+.modal-row .modalData{
+    display: inline-block;
+    font-size: large;
+    width: 60%;
+}
