@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>ダッシュボード</title>
     <link rel="stylesheet" href="/views/css/input.css">
+    <link rel="stylesheet" href="/views/css/header.css">
     <script src="/views/js/dashboard.js"></script>
     <script src="/views/js/table.js"></script>
     <script src="/views/js/toggle.js"></script>
@@ -33,6 +34,7 @@
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
                 <li><a href="index.php?action=dashboard">ホーム</a></li>
+                <li><a href="index.php?action=profile&name=<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">プロフィール</a></li>
                 <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
                 <li><a id="changePw">パスワード変更</a></li>
             </ul>
@@ -270,7 +272,7 @@
                         <input id="tripPurpose" 
                             name="purpose" 
                             list="purposeList" 
-                            class="form-control" 
+                            class="form-control " 
                             placeholder="選択または直接入力" 
                             onfocus="this.select()" 
                             required>

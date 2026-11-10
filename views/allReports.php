@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>日報一覧</title>
     <link rel="stylesheet" href="/views/css/input.css">
+    <link rel="stylesheet" href="/views/css/header.css">
     <script src="/views/js/table.js"></script>
     <script src="/views/js/toggle.js"></script>
 </head>
