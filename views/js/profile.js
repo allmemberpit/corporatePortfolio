@@ -26,13 +26,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const cancel   = document.getElementById('cancel');
     const datas  = document.querySelectorAll('.profileData');
     const inputs = document.querySelectorAll('.profileInput');
-    //console.log(editForm.action);
     edit.addEventListener('click', () => {
         datas.forEach((data,i)=>{
             if (inputs[i]) {
                 // 順番（インデックス）が一致する入力欄に値をセット
                 data.style.display = 'none';
-                inputs[i].value = data.textContent;
+                if(inputs[i].type=='date'){
+                    inputs[i].value = data.dataset.date;
+                }else{
+                    inputs[i].value = data.textContent;
+                }
             }
         });
         inputs.forEach(input => {
@@ -71,7 +74,19 @@ window.addEventListener('DOMContentLoaded', () => {
         let html = '';
         inputs.forEach((input,i) => {
             let value = '';
-            if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
+            if (input.type === 'date') {
+                let birthDate = input.value ? new Date(input.value) : null;
+                let today = new Date();
+                const year = birthDate ? birthDate.getFullYear() : '';
+                const month = birthDate ? birthDate.getMonth() + 1 : '';
+                const day = birthDate ? birthDate.getDate() : '';
+                let age = today.getFullYear() - year;
+                if (today.getMonth() + 1 < month || (today.getMonth() + 1 === month && today.getDate() < day)) {
+                    age--;
+                }
+                value = `<input type="hidden" class="modalData" name="${names[i]}" value="${input.value}">
+                    <span class="modalData">${year}年${month}月${day}日（${age}歳）</span>`;
+            }else if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
                 value = `<input type="hidden" class="modalData" name="${names[i]}" value="${input.value}">
                     <span class="modalData">${input.value}</span>`;
             }else if (input.tagName === 'DIV') {
