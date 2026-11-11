@@ -31,10 +31,11 @@ class adminController {
             $password = $_POST['password'] ?? '';
             $userId   = $_SESSION['user_id'];
             $name     = $_POST['adminName'] ?? '';
+            $role     = isset($_POST['role']) ? 'admin' : 'user'; // デフォルトは'user'、チェックされていれば'admin'
 
             
             // ユーザー登録処理
-            if ($this->adminModel->create_user($id, $userName,$password)) {
+            if ($this->adminModel->create_user($id, $userName,$password, $role)) {
                 // 登録成功時の処理（例: 成功メッセージ表示）
                 $message = 'ユーザー登録に成功しました。';
             } else {
