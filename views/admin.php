@@ -35,6 +35,8 @@
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
                 <li><a href="index.php?action=admin">ホーム</a></li>
+                <li><a href="index.php?action=dashboard">ダッシュボード</a></li>
+                <li><a href="index.php?action=profile&name=<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">プロフィール</a></li>
                 <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
                 <li><a id="changePw">パスワード変更</a></li>
             </ul>
@@ -107,6 +109,10 @@
             <div>
                 <label for="password">PW:</label>
                 <input type="password" id="password" name="password" required>
+            </div>
+            <div>
+                <label for="admin">管理者権限を付与:</label>
+                <input type="checkbox" id="admin" name="role" value="admin">
             </div>
             <input id="adminName" type="hidden" style="display:none" name="adminName" value="<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">
             <button type="submit" class="btn">新規登録</button>

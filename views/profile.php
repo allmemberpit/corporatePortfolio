@@ -33,6 +33,9 @@
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
                 <li><a href="#">ホーム</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li><a href="index.php?action=admin">管理者ページ</a></li>
+                <?php endif; ?>
                 <li><a href="index.php?action=dashboard">戻る</a></li>
                 <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
             </ul>
@@ -77,12 +80,12 @@
                 </div>
                 <div class="profile-row">
                     <span class="profileCategory">住所</span>
-                    <span class="profileData"><?= htmlspecialchars($profile['address'], ENT_QUOTES, 'UTF-8') ?></span>
+                    <span class="profileData"><?php if (!empty($profile['address'])) { echo htmlspecialchars($profile['address'], ENT_QUOTES, 'UTF-8'); } else { echo "未登録"; } ?></span>
                     <textarea class="profileInput" cols="30"></textarea>
                 </div>
                 <div class="profile-row">
                     <span class="profileCategory">最寄り駅</span>
-                    <span class="profileData"><?= htmlspecialchars($profile['nearest_station'], ENT_QUOTES, 'UTF-8') ?></span>
+                    <span class="profileData"><?php if (!empty($profile['nearest_station'])) { echo htmlspecialchars($profile['nearest_station'], ENT_QUOTES, 'UTF-8'); } else { echo "未登録"; } ?></span>
                     <input type="text" class="profileInput">
                 </div>
             </div>
@@ -96,11 +99,11 @@
                             <?php switch(htmlspecialchars($profile['word'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['word'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['word'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['word'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['word'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['word'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="word" value="1"<?php if ($profile['word'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="word" value="2"<?php if ($profile['word'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="word" value="3"<?php if ($profile['word'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="word" value="4"<?php if ($profile['word'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="word" value="5"<?php if ($profile['word'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>   
                     <div class="profile-row">
@@ -109,11 +112,11 @@
                             <?php switch(htmlspecialchars($profile['excel'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['excel'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['excel'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['excel'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['excel'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['excel'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="excel" value="1"<?php if ($profile['excel'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="excel" value="2"<?php if ($profile['excel'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="excel" value="3"<?php if ($profile['excel'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="excel" value="4"<?php if ($profile['excel'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="excel" value="5"<?php if ($profile['excel'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -122,11 +125,11 @@
                             <?php switch(htmlspecialchars($profile['powerpoint'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['powerpoint'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['powerpoint'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['powerpoint'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['powerpoint'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['powerpoint'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="powerpoint" value="1"<?php if ($profile['powerpoint'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="powerpoint" value="2"<?php if ($profile['powerpoint'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="powerpoint" value="3"<?php if ($profile['powerpoint'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="powerpoint" value="4"<?php if ($profile['powerpoint'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="powerpoint" value="5"<?php if ($profile['powerpoint'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -135,11 +138,11 @@
                             <?php switch(htmlspecialchars($profile['outlook'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['outlook'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['outlook'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['outlook'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['outlook'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['outlook'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="outlook" value="1"<?php if ($profile['outlook'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="outlook" value="2"<?php if ($profile['outlook'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="outlook" value="3"<?php if ($profile['outlook'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="outlook" value="4"<?php if ($profile['outlook'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="outlook" value="5"<?php if ($profile['outlook'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -148,11 +151,11 @@
                             <?php switch(htmlspecialchars($profile['spreadsheet'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['spreadsheet'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['spreadsheet'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['spreadsheet'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['spreadsheet'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['spreadsheet'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="spreadsheet" value="1"<?php if ($profile['spreadsheet'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="spreadsheet" value="2"<?php if ($profile['spreadsheet'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="spreadsheet" value="3"<?php if ($profile['spreadsheet'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="spreadsheet" value="4"<?php if ($profile['spreadsheet'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="spreadsheet" value="5"<?php if ($profile['spreadsheet'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -161,11 +164,11 @@
                             <?php switch(htmlspecialchars($profile['teams'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['teams'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['teams'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['teams'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['teams'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['teams'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="teams" value="1"<?php if ($profile['teams'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="teams" value="2"<?php if ($profile['teams'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="teams" value="3"<?php if ($profile['teams'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="teams" value="4"<?php if ($profile['teams'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="teams" value="5"<?php if ($profile['teams'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                          
@@ -175,11 +178,11 @@
                             <?php switch(htmlspecialchars($profile['adobe'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['adobe'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['adobe'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['adobe'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['adobe'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['adobe'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="adobe" value="1"<?php if ($profile['adobe'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="adobe" value="2"<?php if ($profile['adobe'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="adobe" value="3"<?php if ($profile['adobe'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="adobe" value="4"<?php if ($profile['adobe'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="adobe" value="5"<?php if ($profile['adobe'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -188,11 +191,11 @@
                             <?php switch(htmlspecialchars($profile['cloud'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['cloud'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['cloud'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['cloud'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['cloud'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['cloud'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="cloud" value="1"<?php if ($profile['cloud'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="cloud" value="2"<?php if ($profile['cloud'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="cloud" value="3"<?php if ($profile['cloud'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="cloud" value="4"<?php if ($profile['cloud'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="cloud" value="5"<?php if ($profile['cloud'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -201,11 +204,11 @@
                             <?php switch(htmlspecialchars($profile['accounting'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['accounting'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['accounting'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['accounting'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['accounting'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['accounting'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="accounting" value="1"<?php if ($profile['accounting'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="accounting" value="2"<?php if ($profile['accounting'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="accounting" value="3"<?php if ($profile['accounting'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="accounting" value="4"<?php if ($profile['accounting'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="accounting" value="5"<?php if ($profile['accounting'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                        
@@ -215,17 +218,17 @@
                             <?php switch(htmlspecialchars($profile['erp'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['erp'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['erp'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['erp'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['erp'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['erp'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="erp" value="1"<?php if ($profile['erp'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="erp" value="2"<?php if ($profile['erp'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="erp" value="3"<?php if ($profile['erp'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="erp" value="4"<?php if ($profile['erp'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="erp" value="5"<?php if ($profile['erp'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                        
                     <div class="profile-row">
                         <span class="profileCategory">その他</span>
-                        <span class="profileData"><?= htmlspecialchars($profile['office_other'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span class="profileData"><?php if (!empty($profile['office_other'])) { echo htmlspecialchars($profile['office_other'], ENT_QUOTES, 'UTF-8'); } else { echo "未登録"; } ?></span>
                         <textarea class="profileInput" cols="30" rows="4"></textarea>
                     </div>
                 </div>
@@ -239,11 +242,11 @@
                             <?php switch(htmlspecialchars($profile['python'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['python'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['python'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['python'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['python'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['python'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="python" value="1"<?php if ($profile['python'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="python" value="2"<?php if ($profile['python'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="python" value="3"<?php if ($profile['python'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="python" value="4"<?php if ($profile['python'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="python" value="5"<?php if ($profile['python'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -252,11 +255,11 @@
                             <?php switch(htmlspecialchars($profile['html'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                          <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['html'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['html'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['html'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['html'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['html'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="html" value="1"<?php if ($profile['html'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="html" value="2"<?php if ($profile['html'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="html" value="3"<?php if ($profile['html'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="html" value="4"<?php if ($profile['html'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="html" value="5"<?php if ($profile['html'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -265,11 +268,11 @@
                             <?php switch(htmlspecialchars($profile['javascript'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                          <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['javascript'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['javascript'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['javascript'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['javascript'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['javascript'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="javascript" value="1"<?php if ($profile['javascript'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="javascript" value="2"<?php if ($profile['javascript'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="javascript" value="3"<?php if ($profile['javascript'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="javascript" value="4"<?php if ($profile['javascript'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="javascript" value="5"<?php if ($profile['javascript'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -278,11 +281,11 @@
                             <?php switch(htmlspecialchars($profile['typescript'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['typescript'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['typescript'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['typescript'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['typescript'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['typescript'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="typescript" value="1"<?php if ($profile['typescript'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="typescript" value="2"<?php if ($profile['typescript'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="typescript" value="3"<?php if ($profile['typescript'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="typescript" value="4"<?php if ($profile['typescript'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="typescript" value="5"<?php if ($profile['typescript'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -291,11 +294,11 @@
                             <?php switch(htmlspecialchars($profile['php'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['php'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['php'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['php'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['php'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['php'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="php" value="1"<?php if ($profile['php'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="php" value="2"<?php if ($profile['php'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="php" value="3"<?php if ($profile['php'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="php" value="4"<?php if ($profile['php'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="php" value="5"<?php if ($profile['php'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -304,11 +307,11 @@
                             <?php switch(htmlspecialchars($profile['java'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['java'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['java'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['java'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['java'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['java'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="java" value="1"<?php if ($profile['java'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="java" value="2"<?php if ($profile['java'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="java" value="3"<?php if ($profile['java'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="java" value="4"<?php if ($profile['java'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="java" value="5"<?php if ($profile['java'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -317,11 +320,11 @@
                             <?php switch(htmlspecialchars($profile['csharp'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['csharp'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['csharp'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['csharp'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['csharp'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['csharp'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="csharp" value="1"<?php if ($profile['csharp'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="csharp" value="2"<?php if ($profile['csharp'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="csharp" value="3"<?php if ($profile['csharp'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="csharp" value="4"<?php if ($profile['csharp'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="csharp" value="5"<?php if ($profile['csharp'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -330,11 +333,11 @@
                             <?php switch(htmlspecialchars($profile['cplusplus'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['cplusplus'] == '1') echo ' checked'; ?>>未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['cplusplus'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['cplusplus'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['cplusplus'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['cplusplus'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="cplusplus" value="1"<?php if ($profile['cplusplus'] == '1') echo ' checked'; ?>>未経験</label>
+                            <label><input type="radio" name="cplusplus" value="2"<?php if ($profile['cplusplus'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="cplusplus" value="3"<?php if ($profile['cplusplus'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="cplusplus" value="4"<?php if ($profile['cplusplus'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="cplusplus" value="5"<?php if ($profile['cplusplus'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -343,11 +346,11 @@
                             <?php switch(htmlspecialchars($profile['sql'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['sql'] == '1') echo ' checked'; ?>> 未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['sql'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['sql'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['sql'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['sql'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="sql" value="1"<?php if ($profile['sql'] == '1') echo ' checked'; ?>> 未経験</label>
+                            <label><input type="radio" name="sql" value="2"<?php if ($profile['sql'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="sql" value="3"<?php if ($profile['sql'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="sql" value="4"<?php if ($profile['sql'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="sql" value="5"<?php if ($profile['sql'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -356,11 +359,11 @@
                             <?php switch(htmlspecialchars($profile['go'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['go'] == '1') echo ' checked'; ?>>未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['go'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['go'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['go'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['go'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="go" value="1"<?php if ($profile['go'] == '1') echo ' checked'; ?>>未経験</label>
+                            <label><input type="radio" name="go" value="2"<?php if ($profile['go'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="go" value="3"<?php if ($profile['go'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="go" value="4"<?php if ($profile['go'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="go" value="5"<?php if ($profile['go'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
@@ -369,16 +372,16 @@
                             <?php switch(htmlspecialchars($profile['ruby'], ENT_QUOTES, 'UTF-8')): case "1": ?> 未経験 <?php break; case "2": ?> 一年未満 <?php break; case "3": ?> 一年以上 <?php break; case "4": ?> 二年以上 <?php break; case "5": ?> 三年以上 <?php endswitch; ?>
                         </span>
                         <div class="profileInput">
-                            <label><input type="radio" value="1"<?php if ($profile['ruby'] == '1') echo ' checked'; ?>>未経験</label>
-                            <label><input type="radio" value="2"<?php if ($profile['ruby'] == '2') echo ' checked'; ?>>一年未満</label>
-                            <label><input type="radio" value="3"<?php if ($profile['ruby'] == '3') echo ' checked'; ?>>一年以上</label>
-                            <label><input type="radio" value="4"<?php if ($profile['ruby'] == '4') echo ' checked'; ?>>二年以上</label>
-                            <label><input type="radio" value="5"<?php if ($profile['ruby'] == '5') echo ' checked'; ?>>三年以上</label>
+                            <label><input type="radio" name="ruby" value="1"<?php if ($profile['ruby'] == '1') echo ' checked'; ?>>未経験</label>
+                            <label><input type="radio" name="ruby" value="2"<?php if ($profile['ruby'] == '2') echo ' checked'; ?>>一年未満</label>
+                            <label><input type="radio" name="ruby" value="3"<?php if ($profile['ruby'] == '3') echo ' checked'; ?>>一年以上</label>
+                            <label><input type="radio" name="ruby" value="4"<?php if ($profile['ruby'] == '4') echo ' checked'; ?>>二年以上</label>
+                            <label><input type="radio" name="ruby" value="5"<?php if ($profile['ruby'] == '5') echo ' checked'; ?>>三年以上</label>
                         </div>
                     </div>
                     <div class="profile-row">
                         <span class="profileCategory">その他</span>
-                        <span class="profileData"><?= htmlspecialchars($profile['programming_other'], ENT_QUOTES, 'UTF-8') ?></span>
+                        <span class="profileData"><?php if (!empty($profile['programming_other'])) { echo htmlspecialchars($profile['programming_other'], ENT_QUOTES, 'UTF-8'); } else { echo "未登録"; } ?></span>
                         <textarea class="profileInput" cols="30" rows="4"></textarea>
                     </div>
                 </div>

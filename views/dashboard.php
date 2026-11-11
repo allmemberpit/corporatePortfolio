@@ -34,6 +34,9 @@
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
                 <li><a href="index.php?action=dashboard">ホーム</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li><a href="index.php?action=admin">管理者ページ</a></li>
+                <?php endif; ?>
                 <li><a href="index.php?action=profile&name=<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">プロフィール</a></li>
                 <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
                 <li><a id="changePw">パスワード変更</a></li>
