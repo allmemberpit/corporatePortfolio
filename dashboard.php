@@ -4,9 +4,45 @@
     <meta charset="UTF-8">
     <title>ダッシュボード</title>
     <link rel="stylesheet" href="/views/css/input.css">
+    <link rel="stylesheet" href="/views/css/header.css">
     <script src="/views/js/dashboard.js"></script>
+    <script src="/views/js/table.js"></script>
+    <script src="/views/js/toggle.js"></script>
 </head>
 <body>
+    <header class="portal-header">
+        <div class="header-container">
+            <!-- ロゴやサイト名 -->
+            <div class="header-logo">
+                <a href="index.php?action=dashboard">社内ポータル</a>
+            </div>
+
+            <!-- ユーザー名-->
+            <div class="header-name">
+                <p><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></p>
+            </div>
+            <!-- クリック用のメニューボタン（ハンバーガーボタンなど） -->
+            <button type="button" class="menu-toggle-btn" id="menuToggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="btn-text">メニュー</span>
+            </button>
+        </div>
+
+        <!-- 下に伸びるメニュー領域（初期状態は閉じている） -->
+        <nav class="dropdown-menu" id="dropdownMenu">
+            <ul>
+                <li><a href="index.php?action=dashboard">ホーム</a></li>
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li><a href="index.php?action=admin">管理者ページ</a></li>
+                <?php endif; ?>
+                <li><a href="index.php?action=profile&name=<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">プロフィール</a></li>
+                <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
+                <li><a id="changePw">パスワード変更</a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="container">
         <h2>ダッシュボード</h2>
         <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p>
@@ -17,10 +53,10 @@
             <table class="userTable">
                 <thead>
                     <tr>
-                        <th>日付</th>
-                        <th>内容</th>
-                        <th>状態</th>
-                        <th>確認</th>
+                        <th onclick="sortTable(this,0)">日付<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,1)">内容<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,2)">状態<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,3)">確認<span class="sort-icon">↕</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,10 +77,10 @@
                                 <td>
                                     <?php if($reportStatusItem['status'] ==1): ?>
                                         <form action="index.php?action=staffCheckReport&id=<?= $reportStatusItem['id'] ?>" method="POST">
-                                            <input type="submit" value="確認" class="btn">
+                                            <input type="submit" value="確認" class="btn check">
                                         </form>
                                     <?php elseif ($reportStatusItem['status'] == 2): ?>
-                                        <input type="submit" class="modifyReportBtn btn" value="修正" 
+                                        <input type="submit" class="modifyReportBtn btn submit" value="修正" 
                                             data-id="<?= htmlspecialchars($reportStatusItem['id'], ENT_QUOTES, 'UTF-8') ?>"
                                             data-content="<?= htmlspecialchars($reportStatusItem['writing'], ENT_QUOTES, 'UTF-8') ?>"
                                         class="btn">
@@ -66,10 +102,10 @@
             <table class="userTable">
                 <thead>
                     <tr>
-                        <th>日付</th>
-                        <th>種別</th>
-                        <th>状態</th>
-                        <th>確認</th>
+                        <th onclick="sortTable(this,0)" style="cursor: pointer;">日付<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,1)" style="cursor: pointer;">種別<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,2)" style="cursor: pointer;">状態<span class="sort-icon">↕</span></th>
+                        <th onclick="sortTable(this,3)" style="cursor: pointer;">確認<span class="sort-icon">↕</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,10 +138,10 @@
 
                                     <?php elseif($applicationStatusItem['status'] ==1): ?>
                                         <form action="index.php?action=staffCheckApplication&id=<?= $applicationStatusItem['id'] ?>" method="POST">
-                                            <input type="submit" value="確認" class="btn">
+                                            <input type="submit" value="確認" class="btn check">
                                         </form>
                                     <?php elseif ($applicationStatusItem['status'] == 2): ?>
-                                        <input type="submit" class="modifyAppBtn btn" value="修正" 
+                                        <input type="submit" class="modifyAppBtn btn submit" value="修正" 
                                             data-id="<?= htmlspecialchars($applicationStatusItem['id'], ENT_QUOTES, 'UTF-8') ?>"
                                             data-content="
                                                 <?php if ($applicationStatusItem['category'] == 1): 
@@ -239,7 +275,7 @@
                         <input id="tripPurpose" 
                             name="purpose" 
                             list="purposeList" 
-                            class="form-control" 
+                            class="form-control " 
                             placeholder="選択または直接入力" 
                             onfocus="this.select()" 
                             required>
@@ -441,6 +477,24 @@
                 <input  type="submit" class="btn submit" value="送信">  
             </form>
            <button class="btn closeAppModalBtn">キャンセル</button>
+        </div>
+    </div>
+    <div id="pwModal" class="modal">
+        <div class="modal-content">
+            <h3>パスワード変更</h3>
+            <form id="changePw" action="/index.php?action=changePw" method="post">
+                <input id="pwId" type="hidden" name="id">
+                <label for="oldPw">元のパスワード:</label><br>
+                <input type="password" id="oldPw" name="oldPw" rows="1" cols="20"><br>
+                <label for="oldPw">新しいパスワード:</label><br>
+                <input type="password" id="newPw" name="newPw" rows="1" cols="20"><br>
+                <p id="npCaution" class="caution">元のパスワードと同じです</p>
+                <label for="oldPw">新しいパスワードの確認:</label><br>
+                <input type="password" id="confPw" cols="20" rows="1"><br>
+                <p id="cpCaution" class="caution">新しいパスワードが一致しません</p>
+                <input id="submitBtn" type="submit" class="btn submit" value="送信">
+            </form>
+             <button class="btn" id="cancelBtn">キャンセル</button>
         </div>
     </div>
 </body>
