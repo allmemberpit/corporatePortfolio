@@ -27,15 +27,15 @@ class AuthController {
     public function login() {
         $id = $_POST['id'] ?? '';
         $password = $_POST['password'] ?? '';
+        $role = $this->userModel->authenticate($id, $password);
 
-        $admin = 'admin';
-
-        if (!$this->userModel->authenticate($id, $password)) {
+        if (!$role) {
             $error = 'IDまたはパスワードが正しくありません。';
             $this->showLoginForm($error);
         } else {
             $_SESSION['user_id'] = $id;
-            if ($id === $admin) {
+            $_SESSION['role'] = $role;
+            if ($role === 'admin') {
                 $adminController = new adminController();
                 $adminController->showAdmin();
                 exit;

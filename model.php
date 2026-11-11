@@ -23,24 +23,12 @@ class UserModel {
         $sql = "CREATE TABLE IF NOT EXISTS users (
             id TEXT PRIMARY KEY,
             name TEXT NOT NULL,
+            role TEXT DEFAULT 'user',
             password TEXT NOT NULL
         )";
         $this->pdo->exec($sql);
 
-        // 初期ユーザー(admin)が存在しない場合は登録
-        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id');
-        $stmt->bindValue(':id', 'admin', PDO::PARAM_STR);
-        $stmt->execute();
         
-        if ($stmt->fetchColumn() == 0) {
-            // パスワードをハッシュ化して保存
-            $hashedPassword = password_hash('password123', PASSWORD_DEFAULT);
-            $insertStmt = $this->pdo->prepare('INSERT INTO users (id, name, password) VALUES (:id, :name, :password)');
-            $insertStmt->bindValue(':id', 'admin', PDO::PARAM_STR);
-            $insertStmt->bindValue(':name', 'アドミン', PDO::PARAM_STR);
-            $insertStmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
-            $insertStmt->execute();
-        }
         // 日報のテーブルの作成
         $sql = "CREATE TABLE IF NOT EXISTS reports (
                 id INTEGER PRIMARY KEY,
@@ -136,6 +124,26 @@ class UserModel {
             FOREIGN KEY (user_id) REFERENCES users(id)
         )";
         $this->pdo->exec($sql);
+        // 初期ユーザー(admin)が存在しない場合は登録
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM users WHERE id = :id');
+        $stmt->bindValue(':id', 'admin', PDO::PARAM_STR);
+        $stmt->execute();
+        if ($stmt->fetchColumn() == 0) {
+            // パスワードをハッシュ化して保存
+            $id = 'admin';
+            $name = 'アドミン';
+            $hashedPassword = password_hash('password123', PASSWORD_DEFAULT);
+            $insertStmt = $this->pdo->prepare('INSERT INTO users (id, name, role, password) VALUES (:id, :name, :role, :password)');
+            $insertStmt->bindValue(':id', $id, PDO::PARAM_STR);
+            $insertStmt->bindValue(':name', $name, PDO::PARAM_STR);
+            $insertStmt->bindValue(':role', 'admin', PDO::PARAM_STR);
+            $insertStmt->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
+            $insertStmt->execute();
+            $insertStmt = $this->pdo->prepare('INSERT INTO profiles (user_id, name, word, excel, powerpoint, outlook, spreadsheet, teams, adobe, cloud, accounting, erp, python, html, javascript, typescript, php, java, csharp, ruby, cplusplus, sql, go) VALUES (:user_id, :name, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)');
+            $insertStmt->bindValue(':user_id', $id, PDO::PARAM_STR);
+            $insertStmt->bindValue(':name', $name, PDO::PARAM_STR);
+            $insertStmt->execute();
+        }
     }
 
     // ユーザー認証ロジック
@@ -147,11 +155,10 @@ class UserModel {
 
         // ユーザーが存在し、ハッシュ化したパスワードと一致するか検証
         if ($user && password_verify($password, $user['password'])) {
-            $stmt = $this->pdo->prepare('SELECT name FROM users WHERE id = :id');
+            $stmt = $this->pdo->prepare('SELECT name, role FROM users WHERE id = :id');
             $stmt->bindValue(':id', $id, PDO::PARAM_STR);
             $stmt->execute();
-            $name = $stmt->fetch(PDO::FETCH_ASSOC);
-            return $name['name'];
+            return $stmt->fetch(PDO::FETCH_ASSOC)['role'];
         }
         return false;
     }
