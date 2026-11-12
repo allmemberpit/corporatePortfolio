@@ -34,18 +34,38 @@
         <!-- 下に伸びるメニュー領域（初期状態は閉じている） -->
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
-                <li><a href="index.php?action=admin">ホーム</a></li>
+                <?php require_once __DIR__ . '/navigation.php';
+                $navItems = getNavItems($name);
+                foreach ($navItems as $item): ?>
+                    <?php 
+                        // 管理者専用ページの権限チェック
+                        if (!empty($item['admin_only']) && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin')) {
+                            continue;
+                        }
+                        if($item['label'] === '管理者ページ') {
+                            continue; // ダッシュボードは表示しない
+                        } 
+                    ?>
+                    <li><a <?php if (!empty($item['id'])): ?>
+                            id="<?= htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8') ?>"
+                        <?php endif; ?>
+                        <?php if (!empty($item['act'])): ?>
+                            href="<?= htmlspecialchars($item['act'], ENT_QUOTES, 'UTF-8') ?>"
+                        <?php endif; ?>>
+                        <?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?>
+                    </a></li>
+                <?php endforeach; ?>
+                <!--<li><a href="index.php?action=admin">ホーム</a></li>
                 <li><a href="index.php?action=dashboard">ダッシュボード</a></li>
                 <li><a href="index.php?action=profile&name=<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">プロフィール</a></li>
                 <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
-                <li><a id="changePw">パスワード変更</a></li>
+                <li><a id="changePw">パスワード変更</a></li>-->
             </ul>
         </nav>
     </header>
     <div class="container">
-        <h2>ダッシュボード</h2>
+        <h2>管理者ページ</h2>
         <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?></p>
-        <h3>ログイン成功</h3>
         <p>ようこそ、<strong><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></strong> さん！</p>
         <h3>日報申請書確認</h3>
         <div class="checkBtns">

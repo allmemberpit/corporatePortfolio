@@ -32,12 +32,30 @@
         <!-- 下に伸びるメニュー領域（初期状態は閉じている） -->
         <nav class="dropdown-menu" id="dropdownMenu">
             <ul>
-                <li><a href="#">ホーム</a></li>
-                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                    <li><a href="index.php?action=admin">管理者ページ</a></li>
-                <?php endif; ?>
+                <?php require_once __DIR__ . '/navigation.php';
+                $navItems = getNavItems($name);
+                foreach ($navItems as $item): ?>
+                    <?php 
+                        // 管理者専用ページの権限チェック
+                        if (!empty($item['admin_only']) && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin')) {
+                            continue;
+                        }
+                        if($item['label'] === 'プロフィール') {
+                            continue; // プロフィールは表示しない
+                        } 
+                    ?>
+                    <li><a <?php if (!empty($item['id'])): ?>
+                            id="<?= htmlspecialchars($item['id'], ENT_QUOTES, 'UTF-8') ?>"
+                        <?php endif; ?>
+                        <?php if (!empty($item['act'])): ?>
+                            href="<?= htmlspecialchars($item['act'], ENT_QUOTES, 'UTF-8') ?>"
+                        <?php endif; ?>>
+                        <?= htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8') ?>
+                    </a></li>
+                <?php endforeach; ?>
+                <!--<li><a href="#">ホーム</a></li>
                 <li><a href="index.php?action=dashboard">戻る</a></li>
-                <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>
+                <li><a href="index.php?action=logout" class="logout-link">ログアウト</a></li>-->
             </ul>
         </nav>
     </header>
