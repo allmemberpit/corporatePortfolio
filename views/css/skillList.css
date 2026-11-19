@@ -1,0 +1,129 @@
+.groupBar{
+    display: flex;
+    border:1px solid yellow;
+    background-color: lemonchiffon;
+    border-radius: 10px;
+    padding:5px;
+    margin-bottom:10px;
+}
+#officeGroup{
+    background-color: mediumseagreen;
+}
+#programGroup{
+    background-color: cornflowerblue;
+}
+#allReborn{
+    display:none;
+    background-color: black;
+}
+#hiddenChipsBar{
+    display: none;
+    border: 1px solid peachpuff;
+    background-color: oldlace;
+    border-radius: 10px;
+    padding: 10px 0;
+    align-items: center;
+    margin-bottom: 10px;
+}
+#hiddenChipsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+.chip{
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.hidden-chip{
+    display: inline-flex;
+    white-space: nowrap;
+}
+.hidden-office{
+    background-color: lime;
+}
+.hidden-program{
+    background-color: cornflowerblue;
+}
+
+.hiddenSpan{
+    padding:0 10px;
+    display: inline-flex;
+    align-items: center;
+}
+.sort-btn,.hide-col-btn,.column-search{
+    cursor: pointer;
+}
+.column-search{
+    margin-top: 6px;
+    width: 100%;
+    padding: 2px 4px;
+    font-size: 11px;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #1e293b;
+}
+#search{
+    width:90%;
+}
+.table-container{
+    overflow-x: auto;
+    max-width: 100%;
+}
+.corporate-table th:first-child,
+.corporate-table td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 10; 
+    background-color: salmon;
+    border-color: darksalmon;
+}
+.columnName {
+    min-width: 100px;
+}
+#name{
+    background-color: bisque;
+}
+#word{  
+    position: relative;
+    z-index: 0;
+    background-color: mediumseagreen; 
+}
+#office-head{
+    background-color: lightgreen; 
+    border: 1px inset black;
+}
+#programming-head{
+    background-color: lightblue; 
+    border: 1px inset black;
+}
+.officeColumn{
+    background-color: mediumseagreen; 
+    border: 1px inset black;
+}
+.programmingColumn{
+    background-color: deepskyblue; 
+    border: 1px inset black;
+}
+.level{
+    border: 3px inset black;
+    border-radius: 5px;
+}
+.level-1{
+    background-color: gray;
+}
+.level-2{
+    background-color: blue;
+}
+.level-3{
+    background-color: green;
+}
+.level-4{
+    background-color: orange;
+}
+.level-5{
+    background-color: red;
+}
