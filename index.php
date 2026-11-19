@@ -5,11 +5,13 @@ require_once 'controllers/dashboard.php';
 require_once 'controllers/report.php';
 require_once 'controllers/applications.php';
 require_once 'controllers/profile.php';
+require_once 'controllers/skills.php';
 
 $controller = new AuthController();
 $adminController = new adminController();
 $dashboardController = new DashboardController();
 $appController = new appController();
+$skillsController = new skillsController();
 $profileController = new profileController();
 
 $action = $_GET['action'] ?? 'login';
@@ -111,7 +113,10 @@ switch ($action) {
     case 'saveProfile':
         $profileController->saveProfile();
         break;
+    case 'skillList':
+        $skillsController->showSkillList();
+        break;
     default:
-        $controller->showLoginForm();
+        $controller->logout();
         break;
 }
