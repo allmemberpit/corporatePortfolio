@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(hiddenChip.dataset.type == 'office'){
                     officeNum.innerText = head.getAttribute('colspan') + '/' + officeClm;
                 }else{
-                    programClm.innerText = head.getAttribute('colspan') + '/' + programClm;
+                    programNum.innerText = head.getAttribute('colspan') + '/' + programClm;
                 }
                 
                 if (hiddenChipsContainer.children.length === 0) {
