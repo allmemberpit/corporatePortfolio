@@ -52,6 +52,7 @@ body{
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: gray;
+    z-index: 20;
 }
 .modal-content{
     margin: 0 auto;
