@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/views/css/skillList.css">
     <script src="/views/js/skillList.js"></script>
     <script src="/views/js/toggle.js"></script>
+    <script src="/views/js/admin.js"></script>
 </head>
 <body>
     <header class="portal-header">
@@ -416,6 +417,24 @@
        
         <a href="/index.php?action=logout">ログアウト</a>
     </div>
-   
+   <div id="pwModal" class="modal">
+        <div class="modal-content">
+            <h3>パスワード変更</h3>
+            <form id="changePw" action="/index.php?action=changePwAdmin" method="post">
+                <input id="pwId" type="hidden" name="id">
+                <label for="oldPw">元のパスワード:</label><br>
+                <input type="password" id="oldPw" name="oldPw" rows="1" cols="20"><br>
+                <label for="oldPw">新しいパスワード:</label><br>
+                <input type="password" id="newPw" name="newPw" rows="1" cols="20"><br>
+                <p id="npCaution" class="caution">元のパスワードと同じです</p>
+                <label for="oldPw">新しいパスワードの確認:</label><br>
+                <input type="password" id="confPw" cols="20" rows="1"><br>
+                <p id="cpCaution" class="caution">新しいパスワードが一致しません</p>
+                <input id="submitBtn" type="submit" class="btn submit" value="送信">
+                <input type="hidden" name="name" value="<?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>">
+            </form>
+             <button class="btn" id="cancelBtn">キャンセル</button>
+        </div>
+    </div>
 </body>
 </html>
