@@ -59,7 +59,6 @@
     </header>
     <div class="container">
         <h2>スキルマップ</h2>
-        <p>ようこそ、<strong><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></strong> さん！</p>
         <div class="groupBar">
             <span class="hiddenSpan">グループ表示：</span>
             <button type="button" class="chip" id="officeGroup">事務系（<span id="officeNum"></span>）</button>
@@ -335,7 +334,9 @@
                         <?php foreach ($skills as $skill): ?>
                             <tr>
                                 <td data-sort-val="<?= htmlspecialchars($skill['name'], ENT_QUOTES, 'UTF-8'); ?>" >
-                                    <?php echo htmlspecialchars($skill['name'], ENT_QUOTES, 'UTF-8'); ?>
+                                    <a href="index.php?action=otherProfile&id=<?= htmlspecialchars($skill['user_id'], ENT_QUOTES, 'UTF-8'); ?>">
+                                        <?php echo htmlspecialchars($skill['name'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </a>
                                 </td>
                                 <td data-sort-val="<?php echo $skill['word']; ?>" data-skill-name="Word">
                                     <?php echo level($skill['word']); ?>

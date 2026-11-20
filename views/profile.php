@@ -60,18 +60,18 @@
         </nav>
     </header>
     <div class="container">
-        <h1><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?>のプロフィール</h1>
+        <h1><?= htmlspecialchars($profile['name'], ENT_QUOTES, 'UTF-8') ?>のプロフィール</h1>
         <div class="profile" id="editForm" >
             <div class="personal">
                 <h2>
                     <span class="profileTitle">基本情報</span>
-                    <button id="edit" type="button" >編集</button>
+                    <button id="edit" type="button" <?php if(!$own){?>style="visibility: hidden;" <?php }?>>編集</button>
                     <button id="save" type="button" >保存</button>
                     <button id="cancel" type="button" >戻る</button>
                 </h2>
                 <div class="profile-row">
                     <span class="profileCategory">名前</span>
-                    <span class="profileData"><?= htmlspecialchars($name, ENT_QUOTES, 'UTF-8') ?></span>
+                    <span class="profileData"><?= htmlspecialchars($profile['name'], ENT_QUOTES, 'UTF-8') ?></span>
                     <input type="text" class="profileInput">
                 </div> 
                 <div class="profile-row">
