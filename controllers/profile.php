@@ -7,12 +7,12 @@ class profileController {
         $this->profileModel = new profileModel();
         
     }
-    //スタッフのプロフィール画面を表示
+    //スタッフ自身のプロフィール画面を表示
     public function staffProfile(){
         $name = $_GET['name'] ?? '';
         $id = $_SESSION['user_id'];
         $profile = $this->profileModel->getProfileByName($id);
-
+        $own = true;
         require __DIR__ . '/../views/profile.php';
     }
     //スタッフのプロフィール情報を保存
@@ -52,6 +52,16 @@ class profileController {
              $ruby, $cplusplus, $sql, $go, $programming_other);
         $name = $user_name;
         $profile = $this->profileModel->getProfileByName($id);
+        $own = true;
+        require __DIR__ . '/../views/profile.php';
+    }
+    //スキルマップから、他の人のプロフィールを見る場合。
+    public function otherProfile(){
+        $id = $_SESSION['user_id'];
+        $name = $this->profileModel->getProfileByName($id)['name'];
+        $otherId = $_GET['id'];
+        $profile = $this->profileModel->getProfileByName($otherId);
+        $own = false;
         require __DIR__ . '/../views/profile.php';
     }
 }
