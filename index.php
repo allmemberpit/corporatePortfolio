@@ -113,6 +113,9 @@ switch ($action) {
     case 'saveProfile':
         $profileController->saveProfile();
         break;
+    case 'otherProfile':
+        $profileController->otherProfile();
+        break;
     case 'skillList':
         $skillsController->showSkillList();
         break;
