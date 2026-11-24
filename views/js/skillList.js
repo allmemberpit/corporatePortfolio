@@ -134,10 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
         while (hiddenChipsContainer.firstChild) {
             hiddenChipsContainer.removeChild(hiddenChipsContainer.firstChild);
         }
-        if (hiddenChipsContainer.children.length === 0) {
-            hiddenChipsBar.style.display = 'none';
-            allReborn.style.display = 'none';
-        }
+        
+        hiddenChipsBar.style.display = 'none';
+        allReborn.style.display = 'none';
+    
     });
     //事務系ボタンを押したとき
     const officeGroup = document.getElementById('officeGroup');
@@ -150,12 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
         table.querySelectorAll('thead th').forEach(th => {
             if(th.dataset.skillType == type){
                 th.style.display = 'table-cell';
+                const skillName = th.dataset.skillName;
+                const td = table.querySelectorAll(`td[data-skill-name="${skillName}"]`);
+                td.forEach(d=>{
+                    d.style.display = 'table-cell';
+                });
             }  
-            const skillName = th.dataset.skillName;
-            const td = table.querySelectorAll(`td[data-skill-name="${skillName}"]`);
-            td.forEach(d=>{
-                d.style.display = 'table-cell';
-            });
         });
         hiddenChipsContainer.querySelectorAll(`[data-type="${type}"]`).forEach(child =>{
             if(child.dataset.type == type){
