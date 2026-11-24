@@ -78,8 +78,8 @@
                             名前<button class="sort-btn">↕</button><br>
                             <input type="text" id="search" class="column-search">
                         </th>
-                        <th id="office-head" colspan="10">事務系</th>
-                        <th id="programming-head" colspan="11">プログラミング系</th>
+                        <th id="office-head" colspan="10" data-skill-type="office">事務系</th>
+                        <th id="programming-head" colspan="11" data-skill-type="program">プログラミング系</th>
                     </tr>
                     <tr>
                         <th id="word" class="columnName officeColumn" data-col-index="1" data-skill-type="office" data-skill-name="Word">
